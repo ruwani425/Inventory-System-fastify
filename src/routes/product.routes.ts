@@ -19,12 +19,12 @@ export const productRoutes = async (app: FastifyInstance) => {
     return await createproduct(name, quantity, price);
   });
 
-  // app.put("/products/:id", async (req, reply) => {
-  //   const { id } = req.params as { id: string };
-  //   const { name, quantity, price } = req.body as { name: string; quantity: number; price: number };
-  //   // const product = await updateproduct(id, { name, quantity, price });
-  //   return await updateproduct(id, { name, quantity, price });
-  // });
+  app.put("/products/:id", async (req, reply) => {
+    const { id } = req.params as { id: string };
+    const { name, quantity, price } = req.body as { name: string; quantity: number; price: number };
+    // const product = await updateproduct(id, { name, quantity, price });
+    return await updateproduct(id,name, quantity, price);
+  });
 
   app.delete("/products/:id", async (req, reply) => {
     const { id } = req.params as { id: string };
