@@ -27,8 +27,14 @@ import Fastify from "fastify";
 import {productRoutes} from "./routes/product.routes";
 import { customerRoutes } from "./routes/customer.routes";
 import orderRoutes from "./routes/order.routes";
+import jwt from "@fastify/jwt";
 
 const app = Fastify();
+
+// Register JWT
+app.register(jwt, {
+  secret: process.env.JWT_SECRET!,
+});
 
 app.register(productRoutes,);
 app.register(customerRoutes);
