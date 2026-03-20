@@ -24,22 +24,10 @@
 
 // ESM
 import Fastify from "fastify";
-import { PrismaClient } from "../config/prisma";
+import {productRoutes} from "./routes/product.routes";
 
-const prisma = new PrismaClient();
 const app = Fastify();
-
-app.get("/products", async (req, reply) => {
-  const products = await prisma.product.findMany();
-  return products;
-});
-
-app.post("/products", async (req, reply) => {
-  const { name, quantity, price } = req.body as { name: string; quantity: number; price: number };
-  const product = await prisma.product.create({ data: { name, quantity, price } });
-  return product;
-});
-
+app.register(productRoutes);
 app.listen({ port: 3000 }, (err, address) => {
   if (err) {
     console.error(err);
@@ -47,6 +35,8 @@ app.listen({ port: 3000 }, (err, address) => {
   }
   console.log(`Server is running at ${address}`);
 });
+
+//------------------------------------------------------------------------
 
 // const fastify = Fastify({
 //   logger: true
