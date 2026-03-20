@@ -26,10 +26,13 @@
 import Fastify from "fastify";
 import {productRoutes} from "./routes/product.routes";
 import { customerRoutes } from "./routes/customer.routes";
+import orderRoutes from "./routes/order.routes";
 
 const app = Fastify();
-app.register(productRoutes,customerRoutes);
-// app.register(customerRoutes);
+
+app.register(productRoutes,);
+app.register(customerRoutes);
+app.register(orderRoutes);
 app.listen({ port: 3000 }, (err, address) => {
   if (err) {
     console.error(err);
