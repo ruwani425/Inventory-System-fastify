@@ -25,9 +25,11 @@
 // ESM
 import Fastify from "fastify";
 import {productRoutes} from "./routes/product.routes";
+import { customerRoutes } from "./routes/customer.routes";
 
 const app = Fastify();
-app.register(productRoutes);
+app.register(productRoutes,customerRoutes);
+// app.register(customerRoutes);
 app.listen({ port: 3000 }, (err, address) => {
   if (err) {
     console.error(err);
