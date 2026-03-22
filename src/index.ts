@@ -24,18 +24,18 @@
 
 // ESM
 import Fastify from "fastify";
+import "dotenv/config";
 import {productRoutes} from "./routes/product.routes";
 import { customerRoutes } from "./routes/customer.routes";
 import orderRoutes from "./routes/order.routes";
 import jwt from "@fastify/jwt";
+import { authRoutes } from "./routes/auth.routes";
 
 const app = Fastify();
-
-// Register JWT
 app.register(jwt, {
   secret: process.env.JWT_SECRET!,
 });
-
+app.register(authRoutes);
 app.register(productRoutes,);
 app.register(customerRoutes);
 app.register(orderRoutes);
