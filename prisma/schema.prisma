@@ -11,7 +11,8 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = env("DATABASE_URL")
+  //In newer Prisma versions:This is no longer allowed in schema.prisma:
+  // url      = env("DATABASE_URL")
 }
 
 model User { 
