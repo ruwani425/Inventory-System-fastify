@@ -51,7 +51,10 @@ export const login = async (req: FastifyRequest, reply: FastifyReply) => {
   if (!isMatch) {
     return reply.status(401).send({ message: "Invalid credentials" });
   }
-
+  
+//jwtSign() use to generate a JSON Web Token (JWT) for the authenticated user.
+// The token contains the user's id and email as payload, which can be used to identify the user in subsequent requests.
+// The generated token is then returned in the response, allowing the client to use it for authentication in future API calls.
   const token = await reply.jwtSign({
     id: user.id,
     email: user.email,
