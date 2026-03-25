@@ -3,6 +3,7 @@ import { createcustomer, deletecustomer, getcustomerById, getcustomers, updatecu
 
 export const customerRoutes = async (app: FastifyInstance) => {
   app.get("/customers", async (req, reply) => {
+    // req.log.info('Request received');
     return await getcustomers();
   });
 

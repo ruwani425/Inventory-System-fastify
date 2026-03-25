@@ -31,10 +31,16 @@ import orderRoutes from "./routes/order.routes";
 import jwt from "@fastify/jwt";
 import { authRoutes } from "./routes/auth.routes";
 
+// const app = Fastify({
+//   logger: true,
+// });
+
 const app = Fastify();
+
 app.register(jwt, {
   secret: process.env.JWT_SECRET!,
 });
+
 app.register(authRoutes);
 app.register(productRoutes,);
 app.register(customerRoutes);

@@ -8,6 +8,10 @@ export const productRoutes = async (app: FastifyInstance) => {
     return await getproducts();
   });
 
+  //preHandler is used to specify a middleware function that will be 
+  // executed before the route handler. In this case, the verifyToken middleware is used to check 
+  // if the incoming request has a valid JWT token before allowing access to the route. If the token is valid, 
+  // the request will proceed to the route handler; otherwise, it will be rejected with an appropriate error response.
   app.get("/products/:id", { preHandler: [verifyToken] }, async (req, reply) => {
     const { id } = req.params as { id: string };
     // const product = await getproductById(id);
