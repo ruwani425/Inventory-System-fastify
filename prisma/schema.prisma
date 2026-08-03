@@ -11,11 +11,17 @@ generator client {
 
 datasource db {
   provider = "mongodb"
+  //In newer Prisma versions:This is no longer allowed in schema.prisma:
   url      = env("DATABASE_URL")
 }
 
 model User { 
+  // @db.ObjectId is used to specify that the id field is of type ObjectId,
+  // which is a special type used in MongoDB to represent unique identifiers.
+  //@map() is used to specify the actual name of the field in the database, which is _id in this case.
+  //@default(auto()) is used to automatically generate a unique value for the id field when a new user is created.
   id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  password String
   email String  @unique
   name  String?
 } 
@@ -36,6 +42,8 @@ model Product {
   quantity  Int
   price     Float
   createdAt DateTime @default(now())
+  //@updatedAt is a special field that will automatically update to the current date and time whenever the record is updated. 
+  // This is useful for keeping track of when a product was last modified.
   updatedAt DateTime @updatedAt
   orderProducts OrderProduct[]
 }
@@ -43,6 +51,7 @@ model Product {
 model Order {
   id          String       @id @default(auto()) @map("_id") @db.ObjectId
   customerId  String       @db.ObjectId
+  // The @relation attribute is used to define a relationship between the Order model and the Customer model.
   customer    Customer     @relation(fields: [customerId], references: [id])
   products    OrderProduct[]
   totalAmount Float
@@ -58,6 +67,7 @@ model OrderProduct {
   order     Order    @relation(fields: [orderId], references: [id])
   product   Product  @relation(fields: [productId], references: [id])
 }
+
 // model Post { 
 //   id        String  @id @default(auto()) @map("_id") @db.ObjectId
 //   title     String

@@ -23,25 +23,55 @@
 
 
 // ESM
-import Fastify from 'fastify'
+import Fastify from "fastify";
+import "dotenv/config";
+import {productRoutes} from "./routes/product.routes";
+import { customerRoutes } from "./routes/customer.routes";
+import orderRoutes from "./routes/order.routes";
+import jwt from "@fastify/jwt";
+import { authRoutes } from "./routes/auth.routes";
 
-const fastify = Fastify({
-  logger: true
-})
+// const app = Fastify({
+//   logger: true,
+// });
 
-fastify.get('/', async (request, reply) => {
-  return { hello: 'world' }
-})
+const app = Fastify();
+
+app.register(jwt, {
+  secret: process.env.JWT_SECRET!,
+});
+
+app.register(authRoutes);
+app.register(productRoutes,);
+app.register(customerRoutes);
+app.register(orderRoutes);
+app.listen({ port: 3000 }, (err, address) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  }
+  console.log(`Server is running at ${address}`);
+});
+
+//------------------------------------------------------------------------
+
+// const fastify = Fastify({
+//   logger: true
+// })
+
+// fastify.get('/', async (request, reply) => {
+//   return { hello: 'world' }
+// })
 
 /**
  * Run the server!
  */
-const start = async () => {
-  try {
-    await fastify.listen({ port: 3000 })
-  } catch (err) {
-    fastify.log.error(err)
-    process.exit(1)
-  }
-}
-start()
+// const start = async () => {
+//   try {
+//     await fastify.listen({ port: 3000 })
+//   } catch (err) {
+//     fastify.log.error(err)
+//     process.exit(1)
+//   }
+// }
+// start()
